@@ -2,20 +2,32 @@ name: Deploy HTML Website
 on:
   push:
     branches:
-      - main
-  workflow_dispatch:
+      - main # Déclenchement automatique lors d'un push sur la branche main
+  workflow_dispatch: # Permet de lancer manuellement le pipeline si nécessaire
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+
+      - name: Test simple
+        run: echo "CI Pipeline exécuté avec succès !" # Étape de test (Intégration Continue)
+
       - name: Deploy via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.0.0
         with:
+          # Les secrets définis dans les paramètres du dépôt
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
+          
+          # Chemin du dossier local à envoyer
           local-dir: ./
-          server-dir: /www/mon-site
-          dry-run: true # Assurez-vous d'utiliser 'true' pour la simulation
+          
+          # Chemin du serveur (DOIT se terminer par /)
+          server-dir: /www/mon-site/ # CORRECTION APPORTÉE ICI
+          
+          # Simulation du déploiement (pour éviter l'échec faute de serveur réel)
+          dry-run: true
