@@ -1,21 +1,21 @@
-[cite_start]name: Deploy HTML Website [cite: 57]
-[cite_start]on: [cite: 58]
-  [cite_start]push: [cite: 59]
-    [cite_start]branches: [cite: 60, 61]
+name: Deploy HTML Website
+on:
+  push:
+    branches:
       - main
-  [cite_start]workflow_dispatch: [cite: 62] # Permet de lancer manuellement le pipeline depuis l'interface GitHub
-[cite_start]jobs: [cite: 63]
-  [cite_start]deploy: [cite: 64]
-    [cite_start]runs-on: ubuntu-latest [cite: 65]
-    [cite_start]steps: [cite: 66]
-      - [cite_start]name: Checkout repository [cite: 67]
-        [cite_start]uses: actions/checkout@v3 [cite: 68]
-      - [cite_start]name: Deploy via FTP [cite: 69]
-        [cite_start]uses: SamKirkland/FTP-Deploy-Action@v4.0.0 [cite: 70]
+  workflow_dispatch:
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Deploy via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.0.0
         with:
-          [cite_start]server: ${{ secrets.FTP_SERVER }} [cite: 71]
-          [cite_start]username: ${{ secrets.FTP_USERNAME }} [cite: 72]
-          [cite_start]password: ${{ secrets.FTP_PASSWORD }} [cite: 73]
-          [cite_start]local-dir: ./ [cite: 74]
-          [cite_start]server-dir: /www/mon-site [cite: 75]
-          [cite_start]dry-run: false [cite: 76]
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./
+          server-dir: /www/mon-site
+          dry-run: true # Assurez-vous d'utiliser 'true' pour la simulation
