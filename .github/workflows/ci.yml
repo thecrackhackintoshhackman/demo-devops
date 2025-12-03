@@ -17,5 +17,5 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./
-          server-dir: /www/mon-site
+          server-dir: /www/mon-site/
           dry-run: true # Assurez-vous d'utiliser 'true' pour la simulation
